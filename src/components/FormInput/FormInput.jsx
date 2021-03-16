@@ -9,7 +9,13 @@ const FormInput = ({ label, name, ...props }) => {
   return (
     <div className={styles.wrapper}>
       <label htmlFor={name}>{label}</label>
-      <input name={name} ref={register} {...props} className={styles.input} />
+      <input
+        name={name}
+        ref={register}
+        {...props}
+        className={styles.input}
+        autoComplete='off'
+      />
       <div className={styles.error}>{errors && errors[name]?.message}</div>
     </div>
   );

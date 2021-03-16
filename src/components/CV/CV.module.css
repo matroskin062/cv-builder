@@ -1,9 +1,75 @@
-.wrapper{
+.wrapper {
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.grid{
+.grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 350px 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header header'
+    'common exp'
+    'common edu';
+}
+
+.header {
+  grid-area: header;
+  background-color: #264653;
+  padding: 20px;
+  color: white;
+}
+
+.common {
+  grid-area: common;
+  background-color: #f4f1de;
+  padding: 10px;
+}
+
+.education {
+  grid-area: edu;
+  background-color: #40768C;
+  padding-top: 10px;
+  color: white;
+  min-height: 200px;
+}
+
+.education h1 {
+  display: block;
+  background-color: #e76f51;
+  padding: 0 10px;
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+.experience {
+  grid-area: exp;
+  background-color: #40768C;
+  padding-top: 10px;
+  color: white;
+  min-height: 200px;
+}
+
+.content {
+  margin-bottom: 10px;
+  padding: 0 10px;
+  color: white;
+}
+
+.experience p,
+.education p {
+  margin-bottom: 5px;
+}
+
+.experience h1 {
+  display: block;
+  background-color: #2a9d8f;
+  padding: 0 10px;
+  width: 400px;
+  margin-bottom: 10px;
+}
+
+.contentTitle {
+  font-weight: bold;
+  font-size: 18px;
 }

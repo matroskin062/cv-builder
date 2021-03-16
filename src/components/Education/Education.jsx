@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setEducation } from '../../ducks/education';
@@ -13,13 +13,15 @@ const Education = () => {
   const education = useSelector(educationSelector);
 
   const onSubmit = (data) => {
-    console.log('here');
     dispatch(setEducation(data));
   };
 
+  useEffect(() => {
+    education.length && console.log(education);
+  }, [education]);
   return (
     <div>
-      <Link to='/cv'>Go to CV</Link>
+      <h1>Education</h1>
       <Form onSubmit={onSubmit} schema={schema}>
         <FormInput type='text' label='Name' name='name' />
         <FormInput type='text' label='Study Program' name='program' />
@@ -27,8 +29,8 @@ const Education = () => {
         <FormInput type='month' label='End Date' name='end' />
         <Button type='submit'>Add</Button>
       </Form>
-      {education.length &&
-        education.map((el) => <p key={el.name}>{el.name}</p>)}
+      <Link to='/experience'>Next step</Link>
+      {education.length && education.map((el) => <p key={el.id}>{el.name}</p>)}
     </div>
   );
 };

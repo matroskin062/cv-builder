@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid';
 
-const SET_DATA = 'cv-builder/education/SET_DATA';
+const SET_DATA = 'cv-builder/experience/SET_DATA';
 
-export const setEducation = (payload) => ({
+export const setExperienceData = (payload) => ({
   type: SET_DATA,
   payload,
 });
