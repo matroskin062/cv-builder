@@ -1,0 +1,18 @@
+.wrapper {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input{
+  background: transparent;
+  padding: 5px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  margin: 5px 0;
+}
+
+.error {
+  font-size: 13px;
+  color: red;
+}
