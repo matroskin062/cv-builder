@@ -1,36 +1,94 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { setEducation } from '../../ducks/education';
+import { editEducation, setEducation } from '../../ducks/education';
 import Button from '../Button/Button';
+import { schema } from '../Education/Education.validation';
 import Form from '../Form/Form';
 import FormInput from '../FormInput/FormInput';
 import { educationSelector } from './Education.selector';
-import { schema } from './Education.validation';
+import styles from './Education.module.css';
+import { useHistory } from 'react-router';
 
 const Education = () => {
   const dispatch = useDispatch();
   const education = useSelector(educationSelector);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(true);
+  const [editData, setEditData] = useState();
 
-  const onSubmit = (data) => {
+  const submitAdd = (data) => {
     dispatch(setEducation(data));
   };
 
-  useEffect(() => {
-    education.length && console.log(education);
-  }, [education]);
+  const submitEdit = (data) => {
+    const editedEducation = {
+      ...data,
+      id: editData.id,
+    };
+    dispatch(editEducation(editedEducation));
+    setShowEditForm(false);
+    setShowAddForm(true);
+  };
+
+  const editMode = (id) => {
+    setShowEditForm(true);
+    setShowAddForm(false);
+    setEditData(education.find((ed) => ed.id === id));
+  };
+
+  const cancel = () => {
+    setShowAddForm(true);
+    setShowEditForm(false);
+  };
+
   return (
-    <div>
-      <h1>Education</h1>
-      <Form onSubmit={onSubmit} schema={schema}>
-        <FormInput type='text' label='Name' name='name' />
-        <FormInput type='text' label='Study Program' name='program' />
-        <FormInput type='month' label='Start Date' name='start' />
-        <FormInput type='month' label='End Date' name='end' />
-        <Button type='submit'>Add</Button>
-      </Form>
-      <Link to='/experience'>Next step</Link>
-      {education.length && education.map((el) => <p key={el.id}>{el.name}</p>)}
+    <div className={styles.wrapper}>
+      <div>
+        {showAddForm && (
+          <>
+            <h1>Add Education</h1>
+            <Form onSubmit={submitAdd} schema={schema}>
+              <FormInput type='text' name='name' label='name' />
+              <FormInput type='text' name='program' label='program' />
+              <FormInput type='month' name='start' label='start' />
+              <FormInput type='month' name='end' label='end' />
+              <Button type='submit'>Add</Button>
+            </Form>
+          </>
+        )}
+        {showEditForm && (
+          <>
+            <h1>Edit Education</h1>
+            <Form onSubmit={submitEdit} defaultValues={editData}>
+              <FormInput type='text' name='name' label='name' />
+              <FormInput type='text' name='program' label='program' />
+              <FormInput type='month' name='start' label='start' />
+              <FormInput type='month' name='end' label='end' />
+              <div className={styles.btnGroup}>
+                <Button type='submit'>Edit</Button>
+                <Button handler={cancel}>Cancel</Button>
+              </div>
+            </Form>
+          </>
+        )}
+      </div>
+      <div>
+        {education.length > 0 &&
+          education.map((ed) => (
+            <div key={ed.id} className={styles.eduItem}>
+              <div className={styles.eduInfo}>
+                <p className={styles.eduName}>{ed.name}</p>
+                <p>{ed.program}</p>
+                <p>
+                  {ed.start} - {ed.end}
+                </p>
+              </div>
+              <div>
+                <Button handler={() => editMode(ed.id)}>Edit</Button>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
