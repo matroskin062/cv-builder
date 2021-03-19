@@ -1,94 +1,94 @@
-import { useEffect, useState } from 'react';
+import { FieldArray, Form, Formik, getIn } from 'formik';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editEducation, setEducation } from '../../ducks/education';
+import { setEducation } from '../../ducks/education';
 import Button from '../Button/Button';
-import { schema } from '../Education/Education.validation';
-import Form from '../Form/Form';
 import FormInput from '../FormInput/FormInput';
 import { educationSelector } from './Education.selector';
-import styles from './Education.module.css';
-import { useHistory } from 'react-router';
+import { educationSchema } from './Education.validation';
 
 const Education = () => {
-  const dispatch = useDispatch();
   const education = useSelector(educationSelector);
-  const [showEditForm, setShowEditForm] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(true);
-  const [editData, setEditData] = useState();
+  const dispatch = useDispatch();
 
-  const submitAdd = (data) => {
-    dispatch(setEducation(data));
-  };
-
-  const submitEdit = (data) => {
-    const editedEducation = {
-      ...data,
-      id: editData.id,
-    };
-    dispatch(editEducation(editedEducation));
-    setShowEditForm(false);
-    setShowAddForm(true);
-  };
-
-  const editMode = (id) => {
-    setShowEditForm(true);
-    setShowAddForm(false);
-    setEditData(education.find((ed) => ed.id === id));
-  };
-
-  const cancel = () => {
-    setShowAddForm(true);
-    setShowEditForm(false);
+  const onSubmit = (data) => {
+    console.log(data.education);
+    dispatch(setEducation(data.education));
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div>
-        {showAddForm && (
-          <>
-            <h1>Add Education</h1>
-            <Form onSubmit={submitAdd} schema={schema}>
-              <FormInput type='text' name='name' label='name' />
-              <FormInput type='text' name='program' label='program' />
-              <FormInput type='month' name='start' label='start' />
-              <FormInput type='month' name='end' label='end' />
-              <Button type='submit'>Add</Button>
-            </Form>
-          </>
+    <div>
+      <Formik
+        initialValues={{ education }}
+        validationSchema={educationSchema}
+        onSubmit={onSubmit}
+      >
+        {({ values, touched, errors }) => (
+          <Form>
+            <FieldArray name='education'>
+              {({ remove, push }) => {
+                return (
+                  <div>
+                    {values.education.length > 0 &&
+                      values.education.map((_, index) => (
+                        <div key={index}>
+                          <FormInput
+                            name={`education.${index}.name`}
+                            label='Name'
+                            type='text'
+                            touched={getIn(touched, `education[${index}].name`)}
+                            error={getIn(errors, `education[${index}].name`)}
+                            value={values.education[index].name}
+                          />
+                          <FormInput
+                            name={`education.${index}.program`}
+                            label='Program'
+                            type='text'
+                            touched={getIn(
+                              touched,
+                              `education[${index}].program`
+                            )}
+                            error={getIn(errors, `education[${index}].program`)}
+                            value={values.education[index].program}
+                          />
+                          <FormInput
+                            name={`education.${index}.start`}
+                            label='Start date'
+                            type='month'
+                            touched={getIn(
+                              touched,
+                              `education[${index}].start`
+                            )}
+                            error={getIn(errors, `education[${index}].start`)}
+                            value={values.education[index].start}
+                          />
+                          <FormInput
+                            name={`education.${index}.end`}
+                            label='End date'
+                            type='month'
+                            touched={getIn(touched, `education[${index}].end`)}
+                            error={getIn(errors, `education[${index}].end`)}
+                            value={values.education[index].end}
+                          />
+                          <Button handler={() => remove(index)}>Remove</Button>
+                        </div>
+                      ))}
+                    <Button
+                      type='button'
+                      handler={() =>
+                        push({ name: '', program: '', start: '', end: '' })
+                      }
+                    >
+                      Add more
+                    </Button>
+                  </div>
+                );
+              }}
+            </FieldArray>
+            <Button type='submit'>Submit</Button>
+          </Form>
         )}
-        {showEditForm && (
-          <>
-            <h1>Edit Education</h1>
-            <Form onSubmit={submitEdit} defaultValues={editData}>
-              <FormInput type='text' name='name' label='name' />
-              <FormInput type='text' name='program' label='program' />
-              <FormInput type='month' name='start' label='start' />
-              <FormInput type='month' name='end' label='end' />
-              <div className={styles.btnGroup}>
-                <Button type='submit'>Edit</Button>
-                <Button handler={cancel}>Cancel</Button>
-              </div>
-            </Form>
-          </>
-        )}
-      </div>
-      <div>
-        {education.length > 0 &&
-          education.map((ed) => (
-            <div key={ed.id} className={styles.eduItem}>
-              <div className={styles.eduInfo}>
-                <p className={styles.eduName}>{ed.name}</p>
-                <p>{ed.program}</p>
-                <p>
-                  {ed.start} - {ed.end}
-                </p>
-              </div>
-              <div>
-                <Button handler={() => editMode(ed.id)}>Edit</Button>
-              </div>
-            </div>
-          ))}
-      </div>
+      </Formik>
     </div>
   );
 };

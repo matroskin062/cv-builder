@@ -1,8 +1,12 @@
 import * as yup from 'yup';
 
-export const schema = yup.object().shape({
-  name: yup.string().required().min(3).max(100),
-  program: yup.string().required().min(10).max(100),
-  start: yup.string().required(),
-  end: yup.string().required(),
+export const educationSchema = yup.object().shape({
+  education: yup.array().of(
+    yup.object().shape({
+      name: yup.string().required(),
+      program: yup.string().required(),
+      start: yup.string().required('reuquired!'),
+      end: yup.string().required('required!'),
+    })
+  ),
 });

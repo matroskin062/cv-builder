@@ -1,8 +1,6 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import CommonInfo from '../CommonInfo/CommonInfo';
-import CV from '../CV/CV';
 import Education from '../Education/Education';
-import Experience from '../Experience/Experience';
 import Home from '../Home/Home';
 
 function App() {
@@ -11,8 +9,6 @@ function App() {
       <Switch>
         <Route path='/common' component={CommonInfo} />
         <Route path='/education' component={Education} />
-        <Route path='/experience' component={Experience} />
-        <PrivateRoute path='/cv' component={CV} allowed={true} />
         <Route exact path='/' component={Home} />
         <Route path='*' />
       </Switch>

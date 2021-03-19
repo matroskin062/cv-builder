@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-export const schema = yup.object().shape({
+export const commonInfoSchema = yup.object().shape({
   firstName: yup.string().required().min(2).max(20),
   lastName: yup.string().required().min(2).max(20),
   position: yup.string().required().min(3).max(20),

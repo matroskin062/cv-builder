@@ -17,18 +17,9 @@ const initialState = [];
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case SET_DATA:
-      return [...state, { ...payload, id: nanoid() }];
-    case EDIT_DATA:
-      return state.map((el) => {
-        if (el.id !== payload.id) {
-          return el;
-        }
-        return {
-          ...el,
-          ...payload,
-        };
-      });
+    case SET_DATA: {
+      return payload.map((ed) => ({ ...ed, id: nanoid() }));
+    }
     default:
       return state;
   }

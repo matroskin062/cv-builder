@@ -5,7 +5,13 @@ export const setCommonData = (payload) => ({
   payload,
 });
 
-const initialState = {};
+const initialState = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  position: '',
+};
 
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {

@@ -1,24 +1,22 @@
-import React, { memo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React from 'react';
+import { Field } from 'formik';
 
-import styles from './FormInput.module.css';
-
-const FormInput = ({ label, name, ...props }) => {
-  const { register, errors } = useFormContext();
-
+const FormInput = ({
+  name,
+  label,
+  type,
+  placeholder,
+  error,
+  value,
+  touched,
+}) => {
   return (
-    <div className={styles.wrapper}>
+    <div>
       <label htmlFor={name}>{label}</label>
-      <input
-        name={name}
-        ref={register}
-        {...props}
-        className={styles.input}
-        autoComplete='off'
-      />
-      <div className={styles.error}>{errors && errors[name]?.message}</div>
+      <Field type={type} placeholder={placeholder} value={value} name={name} />
+      {error && touched && <div>{error}</div>}
     </div>
   );
 };
 
-export default memo(FormInput);
+export default FormInput;
