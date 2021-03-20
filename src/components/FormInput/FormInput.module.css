@@ -1,0 +1,23 @@
+.input {
+  display: block;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 5px 0;
+  font-style: 18px;
+}
+
+.error {
+  border-color: tomato;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.errorText {
+  color: tomato;
+  font-size: 14px;
+  margin-top: 5px;
+}

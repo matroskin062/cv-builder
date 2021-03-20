@@ -1,8 +1,36 @@
+.container {
+  display: flex;
+}
+
 .button {
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 10px 15px;
-  background-color: lightpink;
+  background-color: #1266f1;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid #1266f1;
+}
+
+.deleteBtn {
+  background-color: #f93154;
+}
+
+.deleteBtn:hover {
+  border: 1px solid #f93154;
+}
+
+.addBtn {
+  background-color: #00b74a;
+}
+
+.addBtn:hover {
+  border: 1px solid #00b74a;
 }

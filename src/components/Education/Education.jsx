@@ -5,19 +5,26 @@ import { setEducation } from '../../ducks/education';
 import Button from '../Button/Button';
 import FormInput from '../FormInput/FormInput';
 import { educationSelector } from './Education.selector';
-import { educationSchema } from './Education.validation';
+import { educationSchema } from '../../validation/Education.shema';
+import { useHistory } from 'react-router';
+
+import styles from './../../styles/Form.module.css';
+import PageTitle from '../PageTitle/PageTitle';
 
 const Education = () => {
   const education = useSelector(educationSelector);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data.education);
+    console.log(data);
     dispatch(setEducation(data.education));
+    history.push('/experience');
   };
 
   return (
     <div>
+      <PageTitle>Education Info</PageTitle>
       <Formik
         initialValues={{ education }}
         validationSchema={educationSchema}
@@ -31,7 +38,7 @@ const Education = () => {
                   <div>
                     {values.education.length > 0 &&
                       values.education.map((_, index) => (
-                        <div key={index}>
+                        <div key={index} className={styles.formContainer}>
                           <FormInput
                             name={`education.${index}.name`}
                             label='Name'
@@ -70,7 +77,9 @@ const Education = () => {
                             error={getIn(errors, `education[${index}].end`)}
                             value={values.education[index].end}
                           />
-                          <Button handler={() => remove(index)}>Remove</Button>
+                          <Button type='button' handler={() => remove(index)}>
+                            Remove
+                          </Button>
                         </div>
                       ))}
                     <Button
