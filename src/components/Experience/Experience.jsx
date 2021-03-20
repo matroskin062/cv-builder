@@ -1,30 +1,24 @@
 import { FieldArray, Form, Formik, getIn } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { experienceSelector } from './Experience.selector';
-import { setExperienceData } from './../../ducks/experience';
-import FormInput from '../FormInput/FormInput';
-import Button from '../Button/Button';
-import { experienceSchema } from '../../validation/Experience.shema';
 import { useHistory } from 'react-router';
-import PageTitle from '../PageTitle/PageTitle';
-
 import styles from '../../styles/Form.module.css';
+import { experienceSchema } from '../../validation/Experience.shema';
+import Button from '../Button/Button';
+import FormInput from '../FormInput/FormInput';
+import PageTitle from '../PageTitle/PageTitle';
+import { setExperienceData } from './../../ducks/experience';
+import { experienceSelector } from './Experience.selector';
 
-const Experience = ({ prevData }) => {
+const Experience = () => {
   const dispatch = useDispatch();
   const experience = useSelector(experienceSelector);
   const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(setExperienceData(data.experience));
     history.push('/cv');
   };
-
-  useEffect(() => {
-    prevData.length === 0 && history.push('/');
-  }, []);
 
   return (
     <div>

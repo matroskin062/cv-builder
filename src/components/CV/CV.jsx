@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { cvSelector } from './CV.selector';
 import styles from './CV.module.css';
-import { useHistory } from 'react-router';
 
-const CV = ({ prevData }) => {
+const CV = () => {
   const { commonInfo, education, experience } = useSelector(cvSelector);
-
-  const history = useHistory();
-  useEffect(() => {
-    prevData.length === 0 && history.push('/');
-  }, []);
 
   return (
     <div className={styles.wrapper}>

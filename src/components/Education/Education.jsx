@@ -1,33 +1,25 @@
 import { FieldArray, Form, Formik, getIn } from 'formik';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { setEducation } from '../../ducks/education';
+import { educationSchema } from '../../validation/Education.shema';
 import Button from '../Button/Button';
 import FormInput from '../FormInput/FormInput';
-import { educationSelector } from './Education.selector';
-import { educationSchema } from '../../validation/Education.shema';
-import { useHistory } from 'react-router';
-
-import styles from './../../styles/Form.module.css';
 import PageTitle from '../PageTitle/PageTitle';
+import styles from './../../styles/Form.module.css';
+import { educationSelector } from './Education.selector';
 
-const Education = ({ prevData }) => {
+const Education = () => {
   const education = useSelector(educationSelector);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(setEducation(data.education));
     history.push('/experience');
   };
-
-  useEffect(() => {
-    if (Object.values(prevData).every((el) => el === null || el === '')) {
-      history.push('/');
-    }
-  }, []);
 
   return (
     <div>

@@ -1,16 +1,14 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import CommonInfo from '../CommonInfo/CommonInfo';
 import Education from '../Education/Education';
 import Experience from '../Experience/Experience';
 import Home from '../Home/Home';
-import CV from './../CV/CV';
-
-import styles from './App.module.css';
-import { useSelector } from 'react-redux';
-import { educationSelector } from './../Education/Education.selector';
 import { commonSelector } from './../CommonInfo/CommonInfo.selector';
+import CV from './../CV/CV';
+import { educationSelector } from './../Education/Education.selector';
 import { experienceSelector } from './../Experience/Experience.selector';
-import { useEffect } from 'react';
+import styles from './App.module.css';
 
 function App() {
   const education = useSelector(educationSelector);
@@ -21,19 +19,38 @@ function App() {
     <div className={styles.container}>
       <Switch>
         <Route path='/common' component={CommonInfo} />
-        <Route
+        <PrivateRoute
           path='/education'
-          render={() => <Education prevData={common} />}
+          component={Education}
+          allowed={
+            !Object.values(common).every((el) => el === null || el === '')
+          }
         />
-        <Route
+        <PrivateRoute
           path='/experience'
-          render={() => <Experience prevData={education} />}
+          component={Experience}
+          allowed={education.length > 0}
         />
-        <Route path='/cv' render={() => <CV prevData={experience} />} />
+        <PrivateRoute
+          path='/cv'
+          component={CV}
+          allowed={experience.length > 0}
+        />
         <Route exact path='/' component={Home} />
         <Route path='*' />
       </Switch>
     </div>
+  );
+}
+
+function PrivateRoute({ component: Component, allowed, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        allowed === true ? <Component {...props} /> : <Redirect to='/' />
+      }
+    />
   );
 }
 
