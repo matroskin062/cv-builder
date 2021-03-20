@@ -1,5 +1,5 @@
 import { FieldArray, Form, Formik, getIn } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { experienceSelector } from './Experience.selector';
 import { setExperienceData } from './../../ducks/experience';
@@ -11,7 +11,7 @@ import PageTitle from '../PageTitle/PageTitle';
 
 import styles from '../../styles/Form.module.css';
 
-const Experience = () => {
+const Experience = ({ prevData }) => {
   const dispatch = useDispatch();
   const experience = useSelector(experienceSelector);
   const history = useHistory();
@@ -21,6 +21,10 @@ const Experience = () => {
     dispatch(setExperienceData(data.experience));
     history.push('/cv');
   };
+
+  useEffect(() => {
+    prevData.length === 0 && history.push('/');
+  }, []);
 
   return (
     <div>

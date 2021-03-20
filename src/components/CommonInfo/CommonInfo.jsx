@@ -14,11 +14,9 @@ import styles from '../../styles/Form.module.css';
 const CommonInfo = () => {
   const commonInfo = useSelector(commonSelector);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const onSubmit = (data) => {
     dispatch(setCommonData(data));
-    history.push('/education');
   };
 
   return (

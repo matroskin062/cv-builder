@@ -1,5 +1,5 @@
 import { FieldArray, Form, Formik, getIn } from 'formik';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEducation } from '../../ducks/education';
 import Button from '../Button/Button';
@@ -11,8 +11,9 @@ import { useHistory } from 'react-router';
 import styles from './../../styles/Form.module.css';
 import PageTitle from '../PageTitle/PageTitle';
 
-const Education = () => {
+const Education = ({ prevData }) => {
   const education = useSelector(educationSelector);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -21,6 +22,12 @@ const Education = () => {
     dispatch(setEducation(data.education));
     history.push('/experience');
   };
+
+  useEffect(() => {
+    if (Object.values(prevData).every((el) => el === null || el === '')) {
+      history.push('/');
+    }
+  }, []);
 
   return (
     <div>

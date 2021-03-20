@@ -6,15 +6,30 @@ import Home from '../Home/Home';
 import CV from './../CV/CV';
 
 import styles from './App.module.css';
+import { useSelector } from 'react-redux';
+import { educationSelector } from './../Education/Education.selector';
+import { commonSelector } from './../CommonInfo/CommonInfo.selector';
+import { experienceSelector } from './../Experience/Experience.selector';
+import { useEffect } from 'react';
 
 function App() {
+  const education = useSelector(educationSelector);
+  const common = useSelector(commonSelector);
+  const experience = useSelector(experienceSelector);
+
   return (
     <div className={styles.container}>
       <Switch>
         <Route path='/common' component={CommonInfo} />
-        <Route path='/education' component={Education} />
-        <Route path='/experience' component={Experience} />
-        <Route path='/cv' component={CV} />
+        <Route
+          path='/education'
+          render={() => <Education prevData={common} />}
+        />
+        <Route
+          path='/experience'
+          render={() => <Experience prevData={education} />}
+        />
+        <Route path='/cv' render={() => <CV prevData={experience} />} />
         <Route exact path='/' component={Home} />
         <Route path='*' />
       </Switch>
@@ -22,15 +37,4 @@ function App() {
   );
 }
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { allowed } = rest;
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        allowed ? <Component {...props} /> : <Redirect to='/' />
-      }
-    />
-  );
-};
 export default App;
