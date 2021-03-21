@@ -4,9 +4,11 @@
 }
 
 .grid {
+  min-height: calc(100vh - 51px);
+
   display: grid;
   grid-template-columns: 350px 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: 150px auto;
   grid-template-areas:
     'header header'
     'common exp'
@@ -20,15 +22,32 @@
   color: white;
 }
 
+.header h1 {
+  margin-bottom: 15px;
+}
+
 .common {
   grid-area: common;
   background-color: #f4f1de;
-  padding: 10px;
+  padding: 10px 20px;
+}
+
+.common h3,
+.common p {
+  margin-bottom: 10px;
+}
+
+.common p {
+  font-size: 18px;
+}
+
+.common h3 {
+  font-size: 22px;
 }
 
 .education {
   grid-area: edu;
-  background-color: #40768C;
+  background-color: #40768c;
   padding-top: 10px;
   color: white;
   min-height: 200px;
@@ -44,7 +63,7 @@
 
 .experience {
   grid-area: exp;
-  background-color: #40768C;
+  background-color: #40768c;
   padding-top: 10px;
   color: white;
   min-height: 200px;
@@ -71,5 +90,5 @@
 
 .contentTitle {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 25px;
 }

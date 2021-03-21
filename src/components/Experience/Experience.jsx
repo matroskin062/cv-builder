@@ -20,14 +20,17 @@ const Experience = () => {
     history.push('/cv');
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       <PageTitle>Work Experience Info</PageTitle>
       <Formik
         onSubmit={onSubmit}
         initialValues={{ experience }}
-        validationSchema={experienceSchema}
-      >
+        validationSchema={experienceSchema}>
         {({ values, touched, errors }) => (
           <Form>
             <FieldArray name='experience'>
@@ -87,26 +90,35 @@ const Experience = () => {
                           <Button
                             variant='delete'
                             type='button'
-                            handler={() => remove(index)}
-                          >
+                            handler={() => remove(index)}>
                             Remove
                           </Button>
                         </div>
                       ))}
+                    {errors.experience && (
+                      <div className={styles.formError}>
+                        {errors.experience.message}
+                      </div>
+                    )}
                     <Button
                       type='button'
                       variant='add'
+                      size='full'
                       handler={() =>
                         push({ company: '', position: '', start: '', end: '' })
-                      }
-                    >
+                      }>
                       Add More
                     </Button>
                   </div>
                 );
               }}
             </FieldArray>
-            <Button type='submit'>Submit</Button>
+            <div className={styles.btnGroup}>
+              <Button type='button' handler={goBack}>
+                👈🏻 Previous step
+              </Button>
+              <Button type='submit'>Get CV! 😎</Button>
+            </div>
           </Form>
         )}
       </Formik>

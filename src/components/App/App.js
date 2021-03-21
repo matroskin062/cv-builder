@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, Link } from 'react-router-dom';
 import CommonInfo from '../CommonInfo/CommonInfo';
 import Education from '../Education/Education';
 import Experience from '../Experience/Experience';
@@ -16,30 +16,35 @@ function App() {
   const experience = useSelector(experienceSelector);
 
   return (
-    <div className={styles.container}>
-      <Switch>
-        <Route path='/common' component={CommonInfo} />
-        <PrivateRoute
-          path='/education'
-          component={Education}
-          allowed={
-            !Object.values(common).every((el) => el === null || el === '')
-          }
-        />
-        <PrivateRoute
-          path='/experience'
-          component={Experience}
-          allowed={education.length > 0}
-        />
-        <PrivateRoute
-          path='/cv'
-          component={CV}
-          allowed={experience.length > 0}
-        />
-        <Route exact path='/' component={Home} />
-        <Route path='*' />
-      </Switch>
-    </div>
+    <>
+      <div className={styles.header}>
+        <Link to='/'>Home</Link>
+      </div>
+      <div className={styles.container}>
+        <Switch>
+          <Route path='/common' component={CommonInfo} />
+          <PrivateRoute
+            path='/education'
+            component={Education}
+            allowed={
+              !Object.values(common).every((el) => el === null || el === '')
+            }
+          />
+          <PrivateRoute
+            path='/experience'
+            component={Experience}
+            allowed={education.length > 0}
+          />
+          <PrivateRoute
+            path='/cv'
+            component={CV}
+            allowed={experience.length > 0}
+          />
+          <Route exact path='/' component={Home} />
+          <Route path='*' />
+        </Switch>
+      </div>
+    </>
   );
 }
 

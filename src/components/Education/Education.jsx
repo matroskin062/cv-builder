@@ -21,20 +21,23 @@ const Education = () => {
     history.push('/experience');
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       <PageTitle>Education Info</PageTitle>
       <Formik
         initialValues={{ education }}
         validationSchema={educationSchema}
-        onSubmit={onSubmit}
-      >
+        onSubmit={onSubmit}>
         {({ values, touched, errors }) => (
           <Form>
             <FieldArray name='education'>
               {({ remove, push }) => {
                 return (
-                  <div>
+                  <>
                     {values.education.length > 0 &&
                       values.education.map((_, index) => (
                         <div key={index} className={styles.formContainer}>
@@ -76,24 +79,43 @@ const Education = () => {
                             error={getIn(errors, `education[${index}].end`)}
                             value={values.education[index].end}
                           />
-                          <Button type='button' handler={() => remove(index)}>
+                          <Button
+                            variant='delete'
+                            type='button'
+                            handler={() => remove(index)}>
                             Remove
                           </Button>
                         </div>
                       ))}
+                    {errors.education && (
+                      <div className={styles.formError}>
+                        {errors.education.message}
+                      </div>
+                    )}
                     <Button
                       type='button'
+                      variant='add'
+                      size='full'
                       handler={() =>
-                        push({ name: '', program: '', start: '', end: '' })
-                      }
-                    >
+                        push({
+                          name: '',
+                          program: '',
+                          start: '',
+                          end: '',
+                        })
+                      }>
                       Add more
                     </Button>
-                  </div>
+                  </>
                 );
               }}
             </FieldArray>
-            <Button type='submit'>Submit</Button>
+            <div className={styles.btnGroup}>
+              <Button type='button' handler={goBack}>
+                👈🏻 Previous step
+              </Button>
+              <Button type='submit'>Next Step 👉🏻</Button>
+            </div>
           </Form>
         )}
       </Formik>

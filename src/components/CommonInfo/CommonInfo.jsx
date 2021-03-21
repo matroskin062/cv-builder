@@ -21,8 +21,12 @@ const CommonInfo = () => {
     history.push('/education');
   };
 
+  const goBack = () => {
+    history.goBack();
+  };
+
   return (
-    <div>
+    <div className={styles.container}>
       <PageTitle>Common user info</PageTitle>
       <Formik
         onSubmit={onSubmit}
@@ -73,7 +77,12 @@ const CommonInfo = () => {
                 touched={touched.phone}
               />
             </div>
-            <Button type='submit'>Submit</Button>
+            <div className={styles.btnGroup}>
+              <Button type='button' handler={goBack}>
+                👈🏻 Previous step
+              </Button>
+              <Button type='submit'>Next step 👉🏻</Button>
+            </div>
           </Form>
         )}
       </Formik>

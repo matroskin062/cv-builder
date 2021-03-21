@@ -2,3 +2,22 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.header {
+  background-color: #2a9d8f;
+  padding: 0 20px;
+}
+
+.header a {
+  display: inline-block;
+  padding: 10px 10px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 5px solid transparent;
+  border-top: 5px solid transparent;
+  transition: 0.3s;
+}
+
+.header a:hover {
+  border-bottom: 5px solid wheat;
+}

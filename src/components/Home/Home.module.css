@@ -1,0 +1,32 @@
+.container {
+  padding: 10px 0;
+}
+
+.container h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 24px;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.container a {
+  display: block;
+  padding: 10px 20px;
+  width: 300px;
+  border: 1px solid #2a9d8f;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 24px;
+  text-decoration: none;
+  color: #2a9d8f;
+  transition: 0.3s;
+}
+
+.container a:hover {
+  background-color: #2a9d8f;
+  color: white;
+}
